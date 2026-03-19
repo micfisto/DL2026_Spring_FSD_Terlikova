@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Meme App</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/frontend/css/style.css">
+
+</head>
+<body>
+
+<div class="card">
+
+    <div class="panel main-panel">
+        <h2 class="title">Weather Meme</h2>
+
+        <div class="input-group">
+            <input type="text" id="cityInput" placeholder="Введите город...">
+            <button class="geolocation-button" onclick="detectUserCity()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+                    <path fill="currentColor"
+                          d="m300,0C134.33,0,0,134.33,0,300c0,65.24,21.39,125.1,56.94,174.13.64,1.18.74,2.49,1.46,3.61l200,300c9.27,13.91,24.9,22.26,41.6,22.26s32.32-8.35,41.6-22.26l200-300c.74-1.13.83-2.44,1.46-3.61,35.55-49.03,56.94-108.89,56.94-174.13C600,134.33,465.68,0,300,0Zm0,400c-55.22,0-100-44.78-100-100s44.78-100,100-100,100,44.78,100,100-44.78,100-100,100Z"/>
+                </svg>
+            </button>
+        </div>
+
+        <button class="main-button" id="showWeatherBtn">Показать погоду</button>
+        <button class="memeLibrary-button" id="libraryBtn">Библиотека мемов</button>
+    </div>
+
+    <div class="panel weather-panel">
+        <button class="back-button" id="backBtn">←</button>
+
+        <h2 id="weatherCity" class="title">Город</h2>
+        <div id="weatherInfo" class="result">Температура, описание</div>
+        <img id="memeImage" class="meme hidden"/>
+
+        <button class="main-button" id="shareBtn">Поделиться</button>
+    </div>
+
+</div>
+
+<script src="/frontend/js/setThemeByTime.js"></script>
+<script src="/frontend/js/weather.js"></script>
+<script src="/frontend/js/panelSlide.js"></script>
+<script src="/frontend/js/weatherPanel.js"></script>
+</body>
+</html>

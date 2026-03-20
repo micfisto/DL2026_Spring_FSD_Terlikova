@@ -1,0 +1,87 @@
+:root {
+    --c1: #FFEEAD;
+    --c2: #ff9c5b;
+    --c3: #ff9b84;
+
+    --morningMainColor: #fb9453;
+    --morningHoverColor: #ff9e60;
+    --dayMainColor: #67ceed;
+    --dayHoverColor: #75d3f1;
+    --nightMainColor: #5e64a4;
+    --nightHoverColor: #686eb5;
+}
+
+body.morning {
+    --c1: #FFEEAD;
+    --c2: #ff9c5b;
+    --c3: #ff9b84;
+}
+
+body.day {
+    --c1: #9bf9ff;
+    --c2: #6ccfef;
+    --c3: #9bf179;
+}
+
+body.night {
+    --c1: #a2d7ea;
+    --c2: #3f4275;
+    --c3: #5f65a5;
+}
+
+body.morning .main-button {
+    background-color: var(--morningMainColor);
+    color: white;
+}
+
+body.morning .main-button:hover {
+    background-color: var(--morningHoverColor);
+    color: white;
+}
+
+body.morning .geolocation-button {
+    color: var(--morningMainColor);
+}
+
+body.morning .geolocation-button:hover {
+    color: var(--morningHoverColor);
+}
+
+
+body.day .main-button {
+    background-color: transparent;
+    border: 1px solid var(--dayMainColor);
+    color: #333;
+}
+
+body.day .main-button:hover {
+    background-color: var(--dayMainColor);
+    color: white;
+}
+
+body.day .geolocation-button {
+    color: var(--dayMainColor);
+}
+
+body.day .geolocation-button:hover {
+    color: var(--dayHoverColor);
+}
+
+body.night .main-button {
+    background-color: transparent;
+    border: 1px solid var(--nightMainColor);
+    color: #333;
+}
+
+body.night .main-button:hover {
+    background-color: var(--nightMainColor);
+    color: white;
+}
+
+body.night .geolocation-button {
+    color: var(--nightMainColor);
+}
+
+body.night .geolocation-button:hover {
+    color: var(--nightHoverColor);
+}

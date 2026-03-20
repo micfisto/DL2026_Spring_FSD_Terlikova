@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather Meme App</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/frontend/css/style.css">
-
+    <link rel="stylesheet" href="/frontend/css/theme.css">
+    <link rel="stylesheet" href="/frontend/css/weatherPanel.css">
 </head>
 <body>
 
@@ -34,16 +34,17 @@
 
         <h2 id="weatherCity" class="title">Город</h2>
         <div id="weatherInfo" class="result">Температура, описание</div>
-        <img id="memeImage" class="meme hidden"/>
-
-        <button class="main-button" id="shareBtn">Поделиться</button>
+        <div id="memeContainer" class="meme-container">
+            <img id="memeImage" class="meme hidden"/>
+        </div>
+        <button class="main-button" id="downloadButton">Скачать</button>
     </div>
 
 </div>
 
-<script src="/frontend/js/setThemeByTime.js"></script>
-<script src="/frontend/js/weather.js"></script>
-<script src="/frontend/js/panelSlide.js"></script>
-<script src="/frontend/js/weatherPanel.js"></script>
+<script type="module" src="/frontend/js/setThemeByTime.js"></script>
+<script type="module" src="/frontend/js/weather.js"></script>
+<script type="module" src="/frontend/js/panelSlide.js"></script>
+<script type="module" src="/frontend/js/weatherPanel.js"></script>
 </body>
 </html>

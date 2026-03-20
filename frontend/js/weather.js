@@ -10,15 +10,15 @@ export async function getWeather(city) {
 
         document.getElementById("weatherCity").innerText = data.city;
         document.getElementById("weatherInfo").innerText =
-            `${data.temperature}°C, ощущается как ${data.feels_like}°C, ${data.description}, ветер ${data.wind_speed} м/с`;
+            `${data.temperature}°C | Ощущается как ${data.feels_like}°C\n${data.description} | Ветер ${data.wind_speed} м/с`;
 
         const memeImg = document.getElementById("memeImage");
         if (data.meme?.url) {
             memeImg.src = data.meme.url;
-            memeImg.classList.remove("hidden");
         } else {
-            memeImg.classList.add("hidden");
+            memeImg.src = '/memes/default.jpg';
         }
+        memeImg.classList.remove("hidden");
 
         const card = document.querySelector(".card");
         card.classList.add("show-weather");

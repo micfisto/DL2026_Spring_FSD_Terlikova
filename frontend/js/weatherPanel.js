@@ -1,37 +1,35 @@
 import { getWeather } from "./weather.js";
+import { slideToWeather } from "./panelSlide.js";
 
 const showWeatherButton = document.getElementById("showWeatherBtn");
 const backButton = document.getElementById("backBtn");
 const downloadButton = document.getElementById("downloadButton");
-const card = document.querySelector(".card");
+const mainCard = document.querySelector(".card");
 
 showWeatherButton.addEventListener("click", () => {
-    const city = document.getElementById("cityInput").value;
-    if (city) {
-        getWeather(city);
+    const cityInput = document.getElementById("cityInput").value;
+    if (cityInput) {
+        getWeather(cityInput).then(() => slideToWeather());
     }
 });
 
 backButton.addEventListener("click", () => {
-    card.classList.remove("show-weather");
+    mainCard.classList.remove("show-weather");
 });
 
 document.getElementById("downloadButton").addEventListener("click", async () => {
-    const memeImg = document.getElementById("memeImage");
-    const weatherPanel = document.querySelector(".weather-panel");
+    const memeImageElement = document.getElementById("memeImage");
+    const weatherPanelElement = document.querySelector(".weather-panel");
 
-    // Проверяем, загружено ли изображение
-    if (!memeImg.src || memeImg.src === window.location.href) {
+    if (!memeImageElement.src || memeImageElement.src === window.location.href) {
         alert("Пожалуйста, сначала загрузите погоду и мем!");
         return;
     }
 
-    // Скрываем кнопки на время создания скриншота
     backButton.style.visibility = "hidden";
     downloadButton.style.visibility = "hidden";
 
     try {
-        // Пробуем разные CDN для загрузки html2canvas
         const cdnUrls = [
             "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
             "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js",
@@ -55,8 +53,7 @@ document.getElementById("downloadButton").addEventListener("click", async () => 
             throw new Error("Не удалось загрузить html2canvas ни с одного CDN");
         }
 
-        // Используем html2canvas для захвата панели
-        const canvas = await html2canvas(weatherPanel, {
+        const screenshotCanvas = await html2canvas(weatherPanelElement, {
             backgroundColor: "#ffffff",
             scale: 2,
             useCORS: true,
@@ -64,31 +61,27 @@ document.getElementById("downloadButton").addEventListener("click", async () => 
             logging: false
         });
 
-        // Преобразуем в формат изображения для скачивания
-        const dataUrl = canvas.toDataURL("image/png");
+        const dataUrl = screenshotCanvas.toDataURL("image/png");
 
-        // Создаём ссылку для скачивания
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = "weather_meme.png";
-        link.click();
-    } catch (err) {
-        console.error("Ошибка при создании изображения:", err);
-        alert("Не удалось создать изображение: " + err.message);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = dataUrl;
+        downloadLink.download = "weather_meme.png";
+        downloadLink.click();
+    } catch (loadError) {
+        console.error("Ошибка при создании изображения:", loadError);
+        alert("Не удалось создать изображение: " + loadError.message);
     } finally {
-        // Показываем кнопки обратно
         backButton.style.visibility = "visible";
         downloadButton.style.visibility = "visible";
     }
 });
 
-// Функция для загрузки скрипта
 function loadScript(src) {
     return new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = src;
-        script.onload = () => resolve(window.html2canvas);
-        script.onerror = () => reject(new Error("Ошибка загрузки скрипта"));
-        document.head.appendChild(script);
+        const canvasScriptElement = document.createElement("script");
+        canvasScriptElement.src = src;
+        canvasScriptElement.onload = () => resolve(window.html2canvas);
+        canvasScriptElement.onerror = () => reject(new Error("Ошибка загрузки скрипта"));
+        document.head.appendChild(canvasScriptElement);
     });
 }

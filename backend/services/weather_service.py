@@ -1,18 +1,18 @@
 from backend.clients.weather_api import get_weather_from_api
 from backend.utils.temperature_mapper import get_temperature_category
-from backend.utils.wind_mapper import get_wind_speed_mapper
+from backend.utils.wind_mapper import get_wind_speed_category
 from backend.utils.weather_mapper import get_weather_category
 from backend.services.meme_service import get_meme
 
 
 def get_weather_with_meme(city: str):
     try:
-        data = get_weather_from_api(city)
+        weather_data = get_weather_from_api(city)
 
-        temperature_actual = data["main"]["temp"]
-        temperature_feels = data["main"]["feels_like"]
-        weather = data["weather"][0]["main"]
-        wind_speed = data["wind"]["speed"]
+        temperature_actual = weather_data["main"]["temp"]
+        temperature_feels = weather_data["main"]["feels_like"]
+        weather_main = weather_data["weather"][0]["main"]
+        wind_speed = weather_data["wind"]["speed"]
 
         temp_actual_display = round(temperature_actual)
         feels_like_display = round(temperature_feels)
@@ -23,12 +23,12 @@ def get_weather_with_meme(city: str):
             temp_for_meme = temperature_actual
 
         temp_category = get_temperature_category(round(temp_for_meme))
-        weather_category = get_weather_category(weather)
-        wind_category = get_wind_speed_mapper(wind_speed)
+        weather_category = get_weather_category(weather_main)
+        wind_category = get_wind_speed_category(wind_speed)
 
-        meme = get_meme(temp_category, weather_category, wind_category)
+        weather_meme = get_meme(temp_category, weather_category, wind_category)
 
-        description = f"{weather}"
+        description = weather_main
 
         return {
             "city": city,
@@ -37,9 +37,9 @@ def get_weather_with_meme(city: str):
             "description": description,
             "icon": weather_category,
             "wind_speed": wind_speed,
-            "meme": meme
+            "meme": weather_meme
         }
 
-    except Exception as e:
-        print("ERROR in get_weather_with_meme:", e)
-        return {"error": str(e)}
+    except Exception as weather_error:
+        print("ERROR in get_weather_with_meme:", weather_error)
+        return {"error": str(weather_error)}

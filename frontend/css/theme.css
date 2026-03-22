@@ -1,32 +1,40 @@
 :root {
-    --c1: #FFEEAD;
-    --c2: #ff9c5b;
-    --c3: #ff9b84;
+    --color1: #FFEEAD;
+    --color2: #ff9c5b;
+    --color3: #ff9b84;
 
     --morningMainColor: #fb9453;
     --morningHoverColor: #ff9e60;
-    --dayMainColor: #67ceed;
-    --dayHoverColor: #75d3f1;
+    --dayMainColor: #6ccfef;
+    --dayHoverColor: #86dbf8;
+    --eveningMainColor: #895fa5;
+    --eveningHoverColor: #a977cc;
     --nightMainColor: #5e64a4;
     --nightHoverColor: #686eb5;
 }
 
 body.morning {
-    --c1: #FFEEAD;
-    --c2: #ff9c5b;
-    --c3: #ff9b84;
+    --color1: #FFEEAD;
+    --color2: #ff9c5b;
+    --color3: #ff9b84;
 }
 
 body.day {
-    --c1: #9bf9ff;
-    --c2: #6ccfef;
-    --c3: #9bf179;
+    --color1: #9bf9ff;
+    --color2: #6ccfef;
+    --color3: #9bf179;
+}
+
+body.evening {
+    --color1: #df817f;
+    --color2: #484191;
+    --color3: #665fa5;
 }
 
 body.night {
-    --c1: #a2d7ea;
-    --c2: #3f4275;
-    --c3: #5f65a5;
+    --color1: #a2d7ea;
+    --color2: #3f4275;
+    --color3: #5f65a5;
 }
 
 body.morning .main-button {
@@ -65,6 +73,25 @@ body.day .geolocation-button {
 
 body.day .geolocation-button:hover {
     color: var(--dayHoverColor);
+}
+
+body.evening .main-button {
+    background-color: transparent;
+    border: 1px solid var(--eveningMainColor);
+    color: #333;
+}
+
+body.evening .main-button:hover {
+    background-color: var(--eveningHoverColor);
+    color: white;
+}
+
+body.evening .geolocation-button {
+    color: var(--eveningMainColor);
+}
+
+body.evening .geolocation-button:hover {
+    color: var(--eveningHoverColor);
 }
 
 body.night .main-button {

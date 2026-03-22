@@ -1,4 +1,4 @@
-def get_wind_speed_mapper(wind_speed: float):
+def get_wind_speed_category(wind_speed: float):
     if wind_speed < 5:
         return "calm"
     elif wind_speed < 15:

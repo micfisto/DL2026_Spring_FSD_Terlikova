@@ -1,4 +1,51 @@
-# created by virtualenv automatically
-/backend/.env
-.venv
-.idea
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Database
+# *.db
+# *.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+package-lock.json
+
+# Backend specific
+backend/.env
+
+# Memes (user uploaded content)
+# memes/*
+# !memes/.gitkeep

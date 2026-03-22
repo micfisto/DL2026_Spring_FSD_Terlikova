@@ -1,18 +1,10 @@
-import {getWeather} from "./weather.js";
-
-const showWeatherBtn = document.getElementById("showWeatherBtn");
-const backButton = document.getElementById("backButton");
-const card = document.querySelector(".card");
-
-showWeatherBtn.addEventListener("click", () => {
-    card.classList.add("show-weather");
-
-    const city = document.getElementById("cityInput").value;
-    if (city) {
-        getWeather(city);
-    }
-});
+const backButton = document.getElementById("backBtn");
+const mainCard = document.querySelector(".card");
 
 backButton.addEventListener("click", () => {
-    card.classList.remove("show-weather");
+    mainCard.classList.remove("show-weather");
 });
+
+export function slideToWeather() {
+    mainCard.classList.add("show-weather");
+}

@@ -7,7 +7,7 @@ body {
     align-items: center;
     transition: background 1s ease;
 
-    background: linear-gradient(120deg, var(--c1), var(--c2), var(--c3));
+    background: linear-gradient(120deg, var(--color1), var(--color2), var(--color3));
     background-size: 400% 400%;
     animation: gradientShift 20s ease infinite;
 }

@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, DateTime
 from backend.database.database import Base
+from datetime import datetime
 
 
 class WeatherMeme(Base):
@@ -10,5 +11,8 @@ class WeatherMeme(Base):
     weather_category = Column(String)
     temp_category = Column(String)
     wind_category = Column(String)
+    season_category = Column(String)
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
 
     file_name = Column(String)

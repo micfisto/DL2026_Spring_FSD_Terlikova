@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather Meme App</title>
+    <link rel="icon" type="image/svg+xml" href="/frontend/icons/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/frontend/css/style.css">
     <link rel="stylesheet" href="/frontend/css/theme.css">
     <link rel="stylesheet" href="/frontend/css/weatherPanel.css">
+    <link rel="stylesheet" href="/frontend/css/memeLibrary.css">
 </head>
 <body>
 
 <div class="card">
-
+    <!--Главная панель-->
     <div class="panel main-panel">
         <h2 class="title">Weather Meme</h2>
 
         <div class="input-group">
-            <input type="text" id="cityInput" placeholder="Введите город...">
-            <button class="geolocation-button" onclick="detectUserCity()">
+            <input type="text" id="cityInput" placeholder="Введите город (на английском)...">
+            <button class="geolocation-button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
                     <path fill="currentColor"
                           d="m300,0C134.33,0,0,134.33,0,300c0,65.24,21.39,125.1,56.94,174.13.64,1.18.74,2.49,1.46,3.61l200,300c9.27,13.91,24.9,22.26,41.6,22.26s32.32-8.35,41.6-22.26l200-300c.74-1.13.83-2.44,1.46-3.61,35.55-49.03,56.94-108.89,56.94-174.13C600,134.33,465.68,0,300,0Zm0,400c-55.22,0-100-44.78-100-100s44.78-100,100-100,100,44.78,100,100-44.78,100-100,100Z"/>
@@ -29,10 +31,118 @@
         <button class="memeLibrary-button" id="libraryBtn">Библиотека мемов</button>
     </div>
 
-    <div class="panel weather-panel">
-        <button class="back-button" id="backBtn">←</button>
+    <!-- Панель библиотеки мемов -->
+    <div class="meme-library-overlay" id="memeLibraryOverlay">
+        <div class="meme-library-panel">
+            <button class="meme-library-close-button" id="memeLibraryClose">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M62 10.571L53.429 2L32 23.429L10.571 2L2 10.571L23.429 32L2 53.429L10.571 62L32 40.571L53.429 62L62 53.429L40.571 32z"
+                          fill="currentColor"></path>
+                </svg>
+            </button>
+            <header>Библиотека мемов</header>
 
-        <h2 id="weatherCity" class="title">Город</h2>
+            <!-- Кнопки действий -->
+            <div class="meme-library-actions-button">
+                <button class="meme-library-button" id="uploadMemeBtn">Загрузить мем</button>
+                <button class="meme-library-button" id="deleteMemeBtn">Удалить мем</button>
+                <button class="meme-library-button" id="editMemeBtn">Редактировать мем</button>
+            </div>
+
+            <!-- Раздел загрузки -->
+            <div class="meme-upload-section" id="memeUploadSection">
+                <input type="file" id="memeFileInput" accept="image/*">
+                <label for="memeFileInput" class="custom-file-button">
+                    <span class="button-text">Выберите файл<?xml version="1.0" encoding="utf-8"?></span>
+                    <svg width="800px" height="800px" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                                d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z" fill="currentColor"></path>
+                    </svg>
+                </label>
+                <div class="meme-categories" id="memeCategories">
+                    <div class="category-group">
+                        <h4>Погода:</h4>
+                        <div class="category-options" id="weatherCategories">
+                            <span class="category-option" data-value="sunny">Солнечно</span>
+                            <span class="category-option" data-value="cloudy">Облачно</span>
+                            <span class="category-option" data-value="rainy">Дождливо</span>
+                            <span class="category-option" data-value="snowy">Снежно</span>
+                            <span class="category-option" data-value="stormy">Гроза</span>
+                            <span class="category-option" data-value="windy">Ветрено</span>
+                        </div>
+                    </div>
+                    <div class="category-group">
+                        <h4>Температура:</h4>
+                        <div class="category-options" id="tempCategories">
+                            <span class="category-option" data-value="hot">Жарко</span>
+                            <span class="category-option" data-value="warm">Тепло</span>
+                            <span class="category-option" data-value="cool">Прохладно</span>
+                            <span class="category-option" data-value="cold">Холодно</span>
+                            <span class="category-option" data-value="freezing">Мороз</span>
+                        </div>
+                    </div>
+                    <div class="category-group">
+                        <h4>Время года:</h4>
+                        <div class="category-options" id="seasonCategories">
+                            <span class="category-option" data-value="spring">Весна</span>
+                            <span class="category-option" data-value="summer">Лето</span>
+                            <span class="category-option" data-value="autumn">Осень</span>
+                            <span class="category-option" data-value="winter">Зима</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="meme-submit-button" id="memeUploadSubmit">Загрузить мем</button>
+            </div>
+
+            <!-- Раздел удаления -->
+            <div class="meme-delete-section" id="memeDeleteSection">
+                <p>Выберите мем для удаления:</p>
+                <table class="meme-table" id="memeTableDelete">
+                    <thead>
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Категории</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="memeGalleryDelete"></tbody>
+                </table>
+            </div>
+
+            <!-- Раздел редактирования -->
+            <div class="meme-edit-section" id="memeEditSection">
+                <p>Выберите мем для редактирования:</p>
+                <table class="meme-table" id="memeTableEdit">
+                    <thead>
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Категории</th>
+                    </tr>
+                    </thead>
+                    <tbody id="memeGalleryEdit"></tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Карточка погоды -->
+    <div class="panel weather-panel">
+        <button class="back-button" id="backBtn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.35325 13.1314L13.6485 18.4L12.0404 20L4 12L12.0404 4L13.6485 5.6L8.35325 10.8686L20 10.8686L20 13.1314L8.35325 13.1314Z"
+                      fill="currentColor"/>
+            </svg>
+        </button>
+
+        <div class="city-container">
+            <h2 id="weatherCity" class="title">Город</h2>
+            <img id="weatherIcon" class="weather-icon" src="" alt="Погода"/>
+        </div>
         <div id="weatherInfo" class="result">Температура, описание</div>
         <div id="memeContainer" class="meme-container">
             <img id="memeImage" class="meme hidden"/>
@@ -46,5 +156,11 @@
 <script type="module" src="/frontend/js/weather.js"></script>
 <script type="module" src="/frontend/js/panelSlide.js"></script>
 <script type="module" src="/frontend/js/weatherPanel.js"></script>
+<script type="module" src="/frontend/js/geolocation.js"></script>
+<script type="module" src="/frontend/js/memeLibrary.js"></script>
+<script type="module" src="/frontend/js/memeLibrary/api.js"></script>
+<script type="module" src="/frontend/js/memeLibrary/constants.js"></script>
+<script type="module" src="/frontend/js/memeLibrary/renderers.js"></script>
+<script type="module" src="/frontend/js/memeLibrary/utils.js"></script>
 </body>
 </html>

@@ -1,38 +1,40 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, Form
 import shutil
 import os
 
 from backend.database.database import SessionLocal
 from backend.models.meme_model import WeatherMeme
 
-router = APIRouter()
+meme_upload_router = APIRouter()
 
 UPLOAD_FOLDER = "memes"
 
 
-@router.post("/upload_meme")
+@meme_upload_router.post("/upload_meme")
 async def upload_meme(
-        file: UploadFile = File(...),
-        weather_category: str = "",
-        temp_category: str = ""
+        upload_file: UploadFile = File(...),
+        weather_category: str = Form(""),
+        temp_category: str = Form(""),
+        season_category: str = Form("")
 ):
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-    path = f"{UPLOAD_FOLDER}/{file.filename}"
+    file_path = f"{UPLOAD_FOLDER}/{upload_file.filename}"
 
-    with open(path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    with open(file_path, "wb") as output_file:
+        shutil.copyfileobj(upload_file.file, output_file)
 
-    db = SessionLocal()
+    database_session = SessionLocal()
 
-    meme = WeatherMeme(
+    weather_meme = WeatherMeme(
         weather_category=weather_category,
         temp_category=temp_category,
-        file_name=file.filename
+        season_category=season_category,
+        file_name=upload_file.filename
     )
 
-    db.add(meme)
-    db.commit()
-    db.refresh(meme)
+    database_session.add(weather_meme)
+    database_session.commit()
+    database_session.refresh(weather_meme)
 
-    return {"status": "uploaded", "file": file.filename}
+    return {"status": "uploaded", "file": upload_file.filename, "id": weather_meme.id}

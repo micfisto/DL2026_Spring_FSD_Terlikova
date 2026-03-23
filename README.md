@@ -1,50 +1,50 @@
-### WeatherMemeApp
+# WeatherMemeApp
 
-Приложение для отображения погоды с мемами.
+An application that displays weather information with contextual memes based on current weather conditions.
 
-## Функционал
+## Features
 
-- Получение текущей погоды по названию города
-- Отображение мемов в зависимости от погодных условий
-- Загрузка и управление мемами
-- Автодополнение названий городов
-- Геолокация
+- Get current weather by city name
+- Display memes based on weather conditions
+- Upload and manage memes
+- City name autocomplete
+- Geolocation support
 
-## Технологии
+## Technology Stack
 
 ### Backend
-- **FastAPI** - веб-фреймворк
-- **Uvicorn** - ASGI сервер для запуска FastAPI
-- **SQLAlchemy** - ORM для работы с базой данных
-- **SQLite** - база данных
-- **Requests** - HTTP клиент для API погоды
-- **python-dotenv** - загрузка переменных окружения из .env файлов
-- **python-multipart** - поддержка загрузки файлов через multipart/form-data
+- **FastAPI** - Web framework
+- **Uvicorn** - ASGI server for running FastAPI
+- **SQLAlchemy** - ORM for database operations
+- **SQLite** - Database
+- **Requests** - HTTP client for weather API
+- **python-dotenv** - Load environment variables from .env files
+- **python-multipart** - Support for file uploads via multipart/form-data
 
 ### Frontend
-- **HTML5/CSS3/JavaScript** - интерфейс
-- **html2canvas** - создание скриншотов
+- **HTML5/CSS3/JavaScript** - User interface
+- **html2canvas** - Screenshot generation
 
-## Установка и запуск
+## Installation and Setup
 
-### Требования
-- Python 3.10 или выше
+### Requirements
+- Python 3.10 or higher
 - pip
 
-### 1. Клонировать репозиторий
+### 1. Clone the repository
 
 ```bash
-git clone <URL_ВАШЕГО_РЕПОЗИТОРИЯ>
+git clone <https://github.com/micfisto/DL2026_Spring_FSD_Terlikova>
 cd WeatherMemeApp
 ```
 
-### 2. Создать виртуальное окружение
+### 2. Create virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-### 3. Активировать виртуальное окружение
+### 3. Activate virtual environment
 
 **Windows:**
 ```bash
@@ -56,79 +56,172 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 4. Установить зависимости
+### 4. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Создать файл .env
+### 5. Create .env file
 
-Создайте файл `backend/.env` и добавьте:
+Create a `backend/.env` file and add:
 
 ```
-OPENWEATHER_API_KEY=ваш_ключ_api
+OPENWEATHER_API_KEY=your_api_key
 ```
 
-Получить API ключ можно на: https://openweathermap.org/api
+Get API key at: https://openweathermap.org/api
 
-### 6. Запустить приложение
+### 6. Run the application
 
 ```bash
 uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Открыть в браузере: http://localhost:8000
+Open in browser: http://localhost:8000
 
-## Структура проекта
+## API Endpoints
+
+### Weather
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/weather/{city}` | Get weather data and meme for a city |
+
+**Response:**
+```json
+{
+  "weather": {
+    "temperature": 20,
+    "description": "sunny",
+    "wind_speed": 5,
+    "humidity": 60
+  },
+  "meme": {
+    "id": 1,
+    "file_name": "sunny_meme.jpg",
+    "url": "/memes/sunny_meme.jpg"
+  }
+}
+```
+
+### Geocoding
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/geocode?latitude=&longitude=` | Reverse geocoding - get city name from coordinates |
+| GET | `/api/geocode/search?query=&limit=` | Search cities by name |
+
+**Response (reverse geocoding):**
+```json
+{
+  "city": "Moscow"
+}
+```
+
+**Response (search):**
+```json
+{
+  "cities": [
+    {
+      "name": "Moscow",
+      "display": "Moscow, Russia",
+      "latitude": 55.75,
+      "longitude": 37.61
+    }
+  ]
+}
+```
+
+### Meme Management
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/memes` | Get all memes |
+| POST | `/api/upload_meme` | Upload a new meme |
+| PUT | `/api/memes/{meme_id}` | Update meme categories |
+| DELETE | `/api/memes/{meme_id}` | Delete a meme |
+
+**GET /api/memes Response:**
+```json
+[
+  {
+    "id": 1,
+    "file_name": "sunny.jpg",
+    "url": "/memes/sunny.jpg",
+    "weather_category": "sunny",
+    "temp_category": "warm",
+    "wind_category": "calm",
+    "season_category": "summer",
+    "created_at": 1699999999.0
+  }
+]
+```
+
+**POST /api/upload_meme** (multipart/form-data):
+- `upload_file`: Image file
+- `weather_category`: Weather condition (sunny, rainy, cloudy, snowy, stormy, windy)
+- `temp_category`: Temperature category (cold, warm, hot)
+- `season_category`: Season (spring, summer, autumn, winter)
+
+**PUT /api/memes/{meme_id}** (JSON):
+```json
+{
+  "weather_category": "rainy",
+  "temp_category": "cold",
+  "season_category": "autumn"
+}
+```
+
+## Project Structure
 
 ```
 WeatherMemeApp/
 ├── backend/
-│   ├── api/           # API роуты
-│   ├── clients/       # Клиенты внешних API
-│   ├── database/      # Настройки БД
-│   ├── models/        # Модели SQLAlchemy
-│   ├── services/      # Бизнес-логика
-│   ├── utils/         # Утилиты
-│   └── main.py        # Точка входа
+│   ├── api/           # API routes
+│   ├── clients/       # External API clients
+│   ├── database/      # Database settings
+│   ├── models/        # SQLAlchemy models
+│   ├── services/      # Business logic
+│   ├── utils/         # Utilities
+│   └── main.py        # Entry point
 ├── frontend/
-│   ├── css/           # Стили
-│   ├── icons/         # SVG иконки
+│   ├── css/           # Styles
+│   ├── icons/         # SVG icons
 │   ├── js/            # JavaScript
-│   └── index.html     # Главная страница
-├── memes/             # Загруженные мемы
-├── requirements.txt   # Python зависимости
-└── .gitignore         # Исключения Git
+│   └── index.html     # Main page
+├── memes/             # Uploaded memes
+├── requirements.txt   # Python dependencies
+└── .gitignore         # Git exclusions
 ```
 
-## Настройка Git репозитория
+## Git Repository Setup
 
-### Если удалили старый репозиторий:
+### If you deleted the old repository:
 
 ```bash
-# Удалить старую привязку
+# Remove old binding
 rm -rf .git
 
-# Инициализировать новый
+# Initialize new one
 git init
 
-# Добавить все файлы
+# Add all files
 git add .
 
-# Создать коммит
+# Create commit
 git commit -m "Initial commit"
 
-# Добавить удалённый репозиторий
-git remote add origin <URL_ВАШЕГО_НОВОГО_РЕПОЗИТОРИЯ>
+# Add remote repository
+git remote add origin <YOUR_NEW_REPO_URL>
 
-# Отправить
+# Push
 git push -u origin main
 ```
 
-## Docker (опционально)
+## Docker (Optional)
 
-### Создать Dockerfile
+### Create Dockerfile
 
 ```dockerfile
 FROM python:3.11-slim
@@ -145,18 +238,18 @@ EXPOSE 8000
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-### Запустить с Docker
+### Run with Docker
 
 ```bash
-# Собрать образ
+# Build image
 docker build -t weathermemeapp .
 
-# Запустить контейнер
-docker run -p 8000:8000 -e OPENWEATHER_API_KEY=ваш_ключ weathermemeapp
+# Run container
+docker run -p 8000:8000 -e OPENWEATHER_API_KEY=your_key weathermemeapp
 ```
 
-## Примечания
+## Notes
 
-- **Иконки** - SVG иконки загружаются на GitHub, они маленькие и необходимы для работы
-- **База данных** - SQLite файлы (.db) не загружаются на GitHub (исключены в .gitignore)
-- **Мемы** - загруженные мемы хранятся локально в папке `memes/` и не загружаются на GitHub (каждый пользователь загружает свои мемы)
+- **Icons** - SVG icons are loaded on GitHub, they are small and required for operation
+- **Database** - SQLite files (.db) are not uploaded to GitHub (excluded in .gitignore)
+- **Memes** - Uploaded memes are stored locally in the `memes/` folder and not uploaded to GitHub (each user uploads their own memes)

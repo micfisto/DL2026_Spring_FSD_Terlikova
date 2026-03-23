@@ -34,7 +34,7 @@ An application that displays weather information with contextual memes based on 
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/micfisto/DL2026_Spring_FSD_Terlikova>
+git clone https://github.com/micfisto/DL2026_Spring_FSD_Terlikova WeatherMemeApp
 cd WeatherMemeApp
 ```
 

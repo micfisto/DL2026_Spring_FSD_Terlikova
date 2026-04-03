@@ -46,6 +46,3 @@ node_modules/
 # Obsidian
 .obsidian/
 docs/.obsidian/
-
-# User uploaded/generated content
-memes/

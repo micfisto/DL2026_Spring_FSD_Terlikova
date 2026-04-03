@@ -26,10 +26,11 @@ env/
 .env
 .env.local
 .env.production
+backend/.env
 
 # Database
-# *.db
-# *.sqlite3
+*.db
+*.sqlite3
 
 # OS
 .DS_Store
@@ -41,11 +42,10 @@ logs/
 
 # Node
 node_modules/
-package-lock.json
 
-# Backend specific
-backend/.env
+# Obsidian
+.obsidian/
+docs/.obsidian/
 
-# Memes (user uploaded content)
-# memes/*
-# !memes/.gitkeep
+# User uploaded/generated content
+memes/
